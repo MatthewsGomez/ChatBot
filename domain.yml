@@ -8,27 +8,106 @@ intents:
   - bien
   - triste
   - bot_reto
+  - solicitar_login
+  - solicitar_registro
+  - proporcionar_credenciales
+  - session_start
+
+entities:
+  - usuario
+  - contraseña
+
+slots:
+  usuario:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: usuario
+  
+  contraseña:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: contraseña
+  
+  id_usuario:
+    type: text
+    mappings:
+      - type: custom
+  
+  autenticado:
+    type: bool
+    initial_value: false
+    mappings:
+      - type: custom
 
 responses:
   utter_saludo:
-  - text: "Hola! Como estas?"
+  - text: "¡Hola! ¿Cómo estás?"
+  - text: "¡Hola! ¿Qué tal tu día?"
+  - text: "¡Buenas! ¿Cómo te va?"
+  - text: "¡Hey! ¿Cómo andas?"
+  - text: "¡Saludos! ¿Todo bien?"
 
   utter_animar:
   - text: "Aquí tienes algo para animarte:"
     image: "https://i.imgur.com/nGF1K8f.jpg"
+  - text: "¡Ánimo! Mira esto:"
+    image: "https://i.imgur.com/nGF1K8f.jpg"
+  - text: "Esto te va a alegrar el día:"
+    image: "https://i.imgur.com/nGF1K8f.jpg"
 
   utter_ayudo:
-  - text: "¿Te ayudo?"
+  - text: "¿Te ayudo en algo?"
+  - text: "¿Puedo ayudarte?"
+  - text: "¿Necesitas algo?"
+  - text: "¿En qué te puedo asistir?"
+  - text: "¿Hay algo en lo que pueda ayudarte?"
 
   utter_feliz:
-  - text: "Genial, sigue adelante!"
+  - text: "¡Genial, sigue adelante!"
+  - text: "¡Excelente! Me alegro mucho."
+  - text: "¡Fantástico! Sigue así."
+  - text: "¡Qué bien! Me encanta escuchar eso."
+  - text: "¡Perfecto! Continúa con esa actitud."
 
   utter_despedida:
-  - text: "Hasta luego!"
+  - text: "¡Hasta luego! Cuídate. 👋"
+  - text: "¡Adiós! Que tengas un excelente día. 😊"
+  - text: "¡Nos vemos pronto! Maneja con cuidado. 🚗"
+  - text: "¡Hasta la próxima! Recuerda siempre la seguridad vial. 🛡️"
+  - text: "¡Chao! Espero haberte ayudado. 👍"
 
   utter_soy_bot:
-  - text: "Soy un bot, creado por Rasa."
+  - text: "Soy un bot especializado en análisis de accidentes de tránsito, creado con Rasa. 🤖"
+  - text: "Soy un asistente virtual creado por Rasa para ayudarte con predicciones de severidad de accidentes. 🚦"
+  - text: "Soy un bot inteligente que analiza la severidad de accidentes vehiculares. 🚗"
+
+  utter_pedir_credenciales_registro:
+  - text: "📝 Para registrarte, necesito tu usuario y contraseña.\n\nEscribe en formato:\nusuario: tu_usuario, contraseña: tu_contraseña"
+  - text: "🔐 Por favor ingresa tus datos de registro:\n\nFormato: usuario: tu_usuario, contraseña: tu_contraseña"
+  - text: "✍️ Necesito que me proporciones:\n\n• Usuario\n• Contraseña\n\nFormato: usuario: tu_usuario, contraseña: tu_contraseña"
+
+  utter_solicitar_login_inicial:
+  - text: "🔐 Para comenzar a usar el chat, necesitas iniciar sesión.\n\n¿Ya tienes una cuenta o necesitas registrarte?"
+  - text: "👋 ¡Bienvenido!\n\nPara acceder al sistema, por favor inicia sesión o regístrate si es tu primera vez."
+  - text: "🚦 Para utilizar el sistema de predicción de accidentes, primero debes autenticarte.\n\n¿Tienes cuenta o necesitas crear una?"
+  - text: "🔒 Hola! Este es un sistema protegido.\n\nPor favor, inicia sesión o regístrate para continuar."
+  - text: "👤 ¡Hola! Necesito que inicies sesión para poder ayudarte.\n\n¿Ya tienes cuenta?"
+
+  utter_bienvenida_post_login:
+  - text: "🎉 ¡Bienvenido al Sistema de Predicción de Severidad de Accidentes!\n\n🚗 Puedo ayudarte a predecir qué tan grave podría ser un accidente basándome en diferentes factores como:\n\n📍 Ubicación y tipo de vía\n🌤️ Condiciones climáticas\n⏰ Hora del día\n🚦 Condiciones de tráfico\n🚙 Tipos de vehículos involucrados\n\n📊 Te daré una predicción sobre si el accidente podría ser:\n• 💚 Leve (sin heridos graves)\n• 🚑 Grave (con heridos)\n• 🚨 Muy grave (con fallecidos)\n\n¿En qué puedo ayudarte hoy?"
+  - text: "✨ ¡Genial! Ya estás dentro del sistema.\n\n🤖 Soy tu asistente de análisis de accidentes de tránsito. Mi función es predecir la severidad de accidentes según múltiples variables:\n\n🔍 Analizo:\n✓ Condiciones de la carretera\n✓ Clima y visibilidad\n✓ Tipo de cruce o intersección\n✓ Velocidad permitida\n✓ Número de vehículos\n✓ Y mucho más...\n\n🎯 Te daré predicciones precisas para ayudarte a entender el nivel de riesgo.\n\n¿Qué información necesitas?"
+  - text: "🚦 ¡Perfecto! Has accedido al Sistema Inteligente de Análisis de Accidentes.\n\n💡 ¿Qué hago?\nPredigo la severidad de accidentes vehiculares usando inteligencia artificial. Basándome en datos como ubicación, clima, hora y condiciones de tráfico, te digo si un accidente podría ser leve, grave o muy grave.\n\n🛡️ ¿Para qué sirve?\n• Análisis de riesgos viales\n• Planificación de rutas seguras\n• Estudios de seguridad vial\n• Prevención de accidentes\n\n📈 Cuéntame, ¿qué necesitas analizar?"
+  - text: "👨‍💼 ¡Ya estás listo para comenzar!\n\n🚗💨 Soy un sistema especializado en predicción de severidad de accidentes. Utilizo modelos de Machine Learning entrenados con datos reales para estimar qué tan peligroso podría ser un accidente.\n\n📋 Información que analizo:\n• Día y hora del incidente\n• Tipo de carretera y límite de velocidad\n• Condiciones meteorológicas\n• Iluminación del lugar\n• Tipo de intersección\n• Número de vehículos y víctimas potenciales\n\n🎯 Resultado: Te indicaré si es Normal 💚, Grave 🚑 o Serio 🚨\n\n¿Comenzamos?"
+  - text: "🎊 ¡Acceso concedido!\n\n🔮 Bienvenido al predictor de severidad de accidentes de tránsito.\n\nMi misión es ayudarte a entender el nivel de peligro de situaciones viales usando tres modelos de IA:\n• Random Forest 🌳\n• SVM (Support Vector Machine) 🎯\n• KNN (K-Nearest Neighbors) 📍\n\n🚨 Clasifico los accidentes en:\n• Leve: Sin consecuencias mayores 💚\n• Grave: Con heridos de consideración 🚑\n• Muy grave: Accidentes fatales 🚨\n\n🧠 Solo dame los detalles del escenario y te daré una predicción precisa.\n\n¿Listo para empezar?"
+
+actions:
+  - action_login
+  - action_registro
+  - action_verificar_autenticacion
+  - action_session_start
 
 session_config:
   session_expiration_time: 60
-  carry_over_slots_to_new_session: true
+  carry_over_slots_to_new_session: false

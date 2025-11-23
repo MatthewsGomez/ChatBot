@@ -11,3 +11,18 @@ rules:
   steps:
   - intent: bot_reto
   - action: utter_soy_bot
+
+- rule: solicitar login
+  steps:
+  - intent: solicitar_login
+  - action: utter_pedir_credenciales_registro
+
+- rule: solicitar registro
+  steps:
+  - intent: solicitar_registro
+  - action: utter_pedir_credenciales_registro
+
+- rule: activar session start
+  conversation_start: true
+  steps:
+  - action: action_session_start

@@ -13,6 +13,9 @@ nlu:
     - qué pasa
     - qué hay
     - saludos
+    - holi
+    - buenaaaas
+    - holaaa
 
 - intent: despedir
   examples: |
@@ -25,6 +28,9 @@ nlu:
     - hasta la vista
     - bye
     - hasta pronto
+    - me voy
+    - chau
+    - hasta después
 
 - intent: afirmar
   examples: |
@@ -36,6 +42,12 @@ nlu:
     - exacto
     - vale
     - ok
+    - sip
+    - obvio
+    - dale
+    - de acuerdo
+    - está bien
+    - bueno
 
 - intent: denegar
   examples: |
@@ -46,6 +58,10 @@ nlu:
     - para nada
     - no realmente
     - de ninguna manera
+    - nop
+    - nel
+    - negativo
+    - no gracias
 
 - intent: bien
   examples: |
@@ -62,6 +78,8 @@ nlu:
     - extremadamente bien
     - tan perfecto
     - muy bien
+    - excelente
+    - de maravilla
 
 - intent: triste
   examples: |
@@ -78,6 +96,9 @@ nlu:
     - no muy bien
     - extremadamente triste
     - tan triste
+    - mal
+    - fatal
+    - pésimo
 
 - intent: bot_reto
   examples: |
@@ -85,3 +106,56 @@ nlu:
     - ¿eres humano?
     - ¿estoy hablando con un bot?
     - ¿estoy hablando con un humano?
+    - eres una persona
+    - eres real
+    - quien eres
+    - que eres
+
+- intent: solicitar_login
+  examples: |
+    - quiero iniciar sesión
+    - hacer login
+    - entrar a mi cuenta
+    - iniciar sesión
+    - login
+    - ingresar
+    - entrar
+    - acceder a mi cuenta
+    - quiero entrar
+    - logearme
+    - hacer log in
+    - conectarme
+    - autenticarme
+    - tengo cuenta
+    - sí tengo cuenta
+    - ya tengo cuenta
+
+- intent: solicitar_registro
+  examples: |
+    - quiero registrarme
+    - crear cuenta
+    - registrarme
+    - registro
+    - nueva cuenta
+    - abrir cuenta
+    - quiero crear una cuenta
+    - necesito registrarme
+    - no tengo cuenta
+    - crear usuario
+    - registrar usuario
+    - nueva cuenta por favor
+    - primera vez
+    - soy nuevo
+
+- intent: proporcionar_credenciales
+  examples: |
+    - usuario: [juan123](usuario), contraseña: [mipass123](contraseña)
+    - mi usuario es [maria](usuario) y mi contraseña es [pass456](contraseña)
+    - [pedro](usuario) [secret789](contraseña)
+    - usuario [carlos](usuario) contraseña [abc123](contraseña)
+    - [admin](usuario) - [admin123](contraseña)
+    - soy [luisa](usuario) y mi clave es [luisa2024](contraseña)
+    - [test](usuario) [test123](contraseña)
+    - user: [user1](usuario) pass: [password1](contraseña)
+    - [jorge](usuario) y [jorge456](contraseña)
+    - mi user es [ana](usuario) y pass [ana789](contraseña)

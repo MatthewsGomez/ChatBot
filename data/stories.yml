@@ -28,3 +28,65 @@ stories:
   - action: utter_ayudo
   - intent: denegar
   - action: utter_despedida
+
+- story: inicio de sesión automático al empezar
+  steps:
+  - action: action_session_start
+  - intent: solicitar_login
+  - action: utter_pedir_credenciales_registro
+  - intent: proporcionar_credenciales
+  - action: action_login
+  - slot_was_set:
+    - autenticado: true
+
+- story: registro al inicio
+  steps:
+  - action: action_session_start
+  - intent: solicitar_registro
+  - action: utter_pedir_credenciales_registro
+  - intent: proporcionar_credenciales
+  - action: action_registro
+  - intent: solicitar_login
+  - action: utter_pedir_credenciales_registro
+  - intent: proporcionar_credenciales
+  - action: action_login
+  - slot_was_set:
+    - autenticado: true
+
+- story: login exitoso
+  steps:
+  - intent: solicitar_login
+  - action: utter_pedir_credenciales_registro
+  - intent: proporcionar_credenciales
+  - action: action_login
+  - slot_was_set:
+    - autenticado: true
+
+- story: login fallido
+  steps:
+  - intent: solicitar_login
+  - action: utter_pedir_credenciales_registro
+  - intent: proporcionar_credenciales
+  - action: action_login
+  - slot_was_set:
+    - autenticado: false
+
+- story: registro exitoso
+  steps:
+  - intent: solicitar_registro
+  - action: utter_pedir_credenciales_registro
+  - intent: proporcionar_credenciales
+  - action: action_registro
+
+- story: registro y luego login
+  steps:
+  - intent: solicitar_registro
+  - action: utter_pedir_credenciales_registro
+  - intent: proporcionar_credenciales
+  - action: action_registro
+  - intent: solicitar_login
+  - action: utter_pedir_credenciales_registro
+  - intent: proporcionar_credenciales
+  - action: action_login
+  - slot_was_set:
+    - autenticado: true
