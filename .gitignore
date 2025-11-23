@@ -1,0 +1,24 @@
+# Rasa
+.rasa/
+models/
+results/
+story_graph.dot
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual Environment
+myvenv/
+venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db

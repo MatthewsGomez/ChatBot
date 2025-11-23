@@ -1,0 +1,34 @@
+version: "3.1"
+
+intents:
+  - saludo
+  - despedir
+  - afirmar
+  - denegar
+  - bien
+  - triste
+  - bot_reto
+
+responses:
+  utter_saludo:
+  - text: "Hola! Como estas?"
+
+  utter_animar:
+  - text: "Aquí tienes algo para animarte:"
+    image: "https://i.imgur.com/nGF1K8f.jpg"
+
+  utter_ayudo:
+  - text: "¿Te ayudo?"
+
+  utter_feliz:
+  - text: "Genial, sigue adelante!"
+
+  utter_despedida:
+  - text: "Hasta luego!"
+
+  utter_soy_bot:
+  - text: "Soy un bot, creado por Rasa."
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true

@@ -1,0 +1,13 @@
+version: "3.1"
+
+rules:
+
+- rule: despedida
+  steps:
+  - intent: despedir
+  - action: utter_despedida
+
+- rule: soy bot
+  steps:
+  - intent: bot_reto
+  - action: utter_soy_bot
