@@ -12,10 +12,24 @@ intents:
   - solicitar_registro
   - proporcionar_credenciales
   - session_start
+  - solicitar_prediccion
 
 entities:
   - usuario
   - contraseña
+  - dia_semana
+  - control_cruce
+  - detalle_cruce
+  - condiciones_luz
+  - distrito
+  - superficie_via
+  - tipo_via
+  - velocidad
+  - area
+  - clima
+  - tipo_vehiculo
+  - numero_victimas
+  - numero_vehiculos
 
 slots:
   usuario:
@@ -40,6 +54,154 @@ slots:
     initial_value: false
     mappings:
       - type: custom
+
+  # Slots para la predicción
+  day_of_week:
+    type: float
+    mappings:
+      - type: from_entity
+        entity: dia_semana
+      - type: from_text
+        conditions:
+         - active_loop: prediccion_form
+           requested_slot: day_of_week
+
+  junction_control:
+    type: float
+    mappings:
+      - type: from_entity
+        entity: control_cruce
+      - type: from_text
+        conditions:
+         - active_loop: prediccion_form
+           requested_slot: junction_control
+
+  junction_detail:
+    type: float
+    mappings:
+      - type: from_entity
+        entity: detalle_cruce
+      - type: from_text
+        conditions:
+         - active_loop: prediccion_form
+           requested_slot: junction_detail
+
+  light_conditions:
+    type: float
+    mappings:
+      - type: from_entity
+        entity: condiciones_luz
+      - type: from_text
+        conditions:
+         - active_loop: prediccion_form
+           requested_slot: light_conditions
+
+  local_authority:
+    type: float
+    mappings:
+      - type: from_entity
+        entity: distrito
+      - type: from_text
+        conditions:
+         - active_loop: prediccion_form
+           requested_slot: local_authority
+
+  road_surface:
+    type: float
+    mappings:
+      - type: from_entity
+        entity: superficie_via
+      - type: from_text
+        conditions:
+         - active_loop: prediccion_form
+           requested_slot: road_surface
+
+  road_type:
+    type: float
+    mappings:
+      - type: from_entity
+        entity: tipo_via
+      - type: from_text
+        conditions:
+         - active_loop: prediccion_form
+           requested_slot: road_type
+
+  speed_limit:
+    type: float
+    mappings:
+      - type: from_entity
+        entity: velocidad
+      - type: from_text
+        conditions:
+         - active_loop: prediccion_form
+           requested_slot: speed_limit
+
+  urban_rural:
+    type: float
+    mappings:
+      - type: from_entity
+        entity: area
+      - type: from_text
+        conditions:
+         - active_loop: prediccion_form
+           requested_slot: urban_rural
+
+  weather:
+    type: float
+    mappings:
+      - type: from_entity
+        entity: clima
+      - type: from_text
+        conditions:
+         - active_loop: prediccion_form
+           requested_slot: weather
+
+  vehicle_type:
+    type: float
+    mappings:
+      - type: from_entity
+        entity: tipo_vehiculo
+      - type: from_text
+        conditions:
+         - active_loop: prediccion_form
+           requested_slot: vehicle_type
+
+  casualties:
+    type: float
+    mappings:
+      - type: from_entity
+        entity: numero_victimas
+      - type: from_text
+        conditions:
+         - active_loop: prediccion_form
+           requested_slot: casualties
+
+  num_vehicles:
+    type: float
+    mappings:
+      - type: from_entity
+        entity: numero_vehiculos
+      - type: from_text
+        conditions:
+         - active_loop: prediccion_form
+           requested_slot: num_vehicles
+
+forms:
+  prediccion_form:
+    required_slots:
+      - day_of_week
+      - junction_control
+      - junction_detail
+      - light_conditions
+      - local_authority
+      - road_surface
+      - road_type
+      - speed_limit
+      - urban_rural
+      - weather
+      - vehicle_type
+      - casualties
+      - num_vehicles
 
 responses:
   utter_saludo:
@@ -96,17 +258,58 @@ responses:
   - text: "👤 ¡Hola! Necesito que inicies sesión para poder ayudarte.\n\n¿Ya tienes cuenta?"
 
   utter_bienvenida_post_login:
-  - text: "🎉 ¡Bienvenido al Sistema de Predicción de Severidad de Accidentes!\n\n🚗 Puedo ayudarte a predecir qué tan grave podría ser un accidente basándome en diferentes factores como:\n\n📍 Ubicación y tipo de vía\n🌤️ Condiciones climáticas\n⏰ Hora del día\n🚦 Condiciones de tráfico\n🚙 Tipos de vehículos involucrados\n\n📊 Te daré una predicción sobre si el accidente podría ser:\n• 💚 Leve (sin heridos graves)\n• 🚑 Grave (con heridos)\n• 🚨 Muy grave (con fallecidos)\n\n¿En qué puedo ayudarte hoy?"
-  - text: "✨ ¡Genial! Ya estás dentro del sistema.\n\n🤖 Soy tu asistente de análisis de accidentes de tránsito. Mi función es predecir la severidad de accidentes según múltiples variables:\n\n🔍 Analizo:\n✓ Condiciones de la carretera\n✓ Clima y visibilidad\n✓ Tipo de cruce o intersección\n✓ Velocidad permitida\n✓ Número de vehículos\n✓ Y mucho más...\n\n🎯 Te daré predicciones precisas para ayudarte a entender el nivel de riesgo.\n\n¿Qué información necesitas?"
-  - text: "🚦 ¡Perfecto! Has accedido al Sistema Inteligente de Análisis de Accidentes.\n\n💡 ¿Qué hago?\nPredigo la severidad de accidentes vehiculares usando inteligencia artificial. Basándome en datos como ubicación, clima, hora y condiciones de tráfico, te digo si un accidente podría ser leve, grave o muy grave.\n\n🛡️ ¿Para qué sirve?\n• Análisis de riesgos viales\n• Planificación de rutas seguras\n• Estudios de seguridad vial\n• Prevención de accidentes\n\n📈 Cuéntame, ¿qué necesitas analizar?"
-  - text: "👨‍💼 ¡Ya estás listo para comenzar!\n\n🚗💨 Soy un sistema especializado en predicción de severidad de accidentes. Utilizo modelos de Machine Learning entrenados con datos reales para estimar qué tan peligroso podría ser un accidente.\n\n📋 Información que analizo:\n• Día y hora del incidente\n• Tipo de carretera y límite de velocidad\n• Condiciones meteorológicas\n• Iluminación del lugar\n• Tipo de intersección\n• Número de vehículos y víctimas potenciales\n\n🎯 Resultado: Te indicaré si es Normal 💚, Grave 🚑 o Serio 🚨\n\n¿Comenzamos?"
-  - text: "🎊 ¡Acceso concedido!\n\n🔮 Bienvenido al predictor de severidad de accidentes de tránsito.\n\nMi misión es ayudarte a entender el nivel de peligro de situaciones viales usando tres modelos de IA:\n• Random Forest 🌳\n• SVM (Support Vector Machine) 🎯\n• KNN (K-Nearest Neighbors) 📍\n\n🚨 Clasifico los accidentes en:\n• Leve: Sin consecuencias mayores 💚\n• Grave: Con heridos de consideración 🚑\n• Muy grave: Accidentes fatales 🚨\n\n🧠 Solo dame los detalles del escenario y te daré una predicción precisa.\n\n¿Listo para empezar?"
+  - text: "🎉 ¡Bienvenido al Sistema de Predicción de Severidad de Accidentes!\n\n🚗 Puedo ayudarte a predecir qué tan grave podría ser un accidente basándome en diferentes factores.\n\n📊 Te daré una predicción sobre si el accidente podría ser:\n• 💚 Leve (sin heridos graves)\n• 🚑 Grave (con heridos)\n• 🚨 Muy grave (con fallecidos)\n\n💬 Escribe 'quiero hacer una predicción' para comenzar.\n\n¿En qué puedo ayudarte hoy?"
+  - text: "✨ ¡Genial! Ya estás dentro del sistema.\n\n🤖 Soy tu asistente de análisis de accidentes de tránsito.\n\n🎯 Te daré predicciones precisas para ayudarte a entender el nivel de riesgo.\n\n💬 Di 'hacer predicción' cuando estés listo.\n\n¿Qué información necesitas?"
+
+  utter_ask_day_of_week:
+  - text: "📅 ¿En qué día de la semana ocurre/ocurrió el accidente?\n\n0: Domingo\n1: Lunes\n2: Martes\n3: Miércoles\n4: Jueves\n5: Viernes\n6: Sábado\n\nEscribe el número:"
+
+  utter_ask_junction_control:
+  - text: "🚦 ¿Qué tipo de control hay en el cruce?\n\n0: Sin control\n1: Señales de stop\n2: Semáforo\n3: Rotonda\n4: Semáforo con sensor\n5: Señales de prioridad\n6: Otro control\n\nEscribe el número:"
+
+  utter_ask_junction_detail:
+  - text: "🔀 ¿Qué tipo de cruce es?\n\n0: Cruce simple\n1: Cruce en T\n2: Cruce en Y\n3: Cruce múltiple\n4: Rotonda\n5: Entrada/salida privada\n6: Otro\n\nEscribe el número:"
+
+  utter_ask_light_conditions:
+  - text: "💡 ¿Cuáles son las condiciones de luz?\n\n0: Plena luz del día\n1: Oscuro sin iluminación\n2: Oscuro con iluminación\n3: Amanecer/Atardecer\n4: Niebla o humo\n5: Otro\n\nEscribe el número:"
+
+  utter_ask_local_authority:
+  - text: "📍 ¿En qué distrito ocurre?\n\nOpciones: 0, 1, 3, 4, 76, 159, 176, 267, 384\n\nEscribe el número:"
+
+  utter_ask_road_surface:
+  - text: "🛣️ ¿Cuál es la condición de la superficie de la vía?\n\n0: Asfalto seco\n1: Asfalto húmedo\n2: Hielo o nieve\n3: Grava\n4: Otro\n\nEscribe el número:"
+
+  utter_ask_road_type:
+  - text: "🚗 ¿Qué tipo de vía es?\n\n0: Calle\n1: Avenida\n2: Carretera principal\n3: Carretera secundaria\n4: Rotonda\n5: Otro\n\nEscribe el número:"
+
+  utter_ask_speed_limit:
+  - text: "⚡ ¿Cuál es el límite de velocidad en km/h?\n\nOpciones: 30, 40, 50, 60, 70, 80, 90, 100, 110, 120\n\nEscribe el número:"
+
+  utter_ask_urban_rural:
+  - text: "🏙️ ¿El área es urbana o rural?\n\n0: Urbano\n1: Rural\n\nEscribe el número:"
+
+  utter_ask_weather:
+  - text: "🌤️ ¿Cuáles son las condiciones climáticas?\n\n0: Despejado\n1: Lluvia ligera\n2: Lluvia intensa\n3: Niebla\n4: Nieve\n5: Viento fuerte\n6: Otro\n\nEscribe el número:"
+
+  utter_ask_vehicle_type:
+  - text: "🚙 ¿Qué tipo de vehículo está involucrado?\n\n0: Coche\n1: Motocicleta\n2: Camión\n3: Autobús\n4: Bicicleta\n5: Peatón\n6: Otro\n\nEscribe el número:"
+
+  utter_ask_casualties:
+  - text: "🚑 ¿Cuántas víctimas potenciales hay?\n\n0: Sin víctimas\n1: 1 víctima\n2: 2 víctimas\n3: 3 víctimas\n4: 4 víctimas\n5: 5 víctimas o más\n\nEscribe el número:"
+
+  utter_ask_num_vehicles:
+  - text: "🚗🚗 ¿Cuántos vehículos están involucrados?\n\n1: 1 vehículo\n2: 2 vehículos\n3: 3 vehículos\n4: 4 vehículos\n5: 5 vehículos o más\n\nEscribe el número:"
+
+  utter_prediccion_iniciada:
+  - text: "🔮 ¡Perfecto! Voy a hacerte algunas preguntas para analizar el accidente.\n\n📝 Son 13 preguntas rápidas. ¡Empecemos!"
 
 actions:
   - action_login
   - action_registro
   - action_verificar_autenticacion
   - action_session_start
+  - action_hacer_prediccion
+  - validate_prediccion_form
 
 session_config:
   session_expiration_time: 60

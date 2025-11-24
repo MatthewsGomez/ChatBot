@@ -159,3 +159,24 @@ nlu:
     - user: [user1](usuario) pass: [password1](contraseña)
     - [jorge](usuario) y [jorge456](contraseña)
     - mi user es [ana](usuario) y pass [ana789](contraseña)
+
+- intent: solicitar_prediccion
+  examples: |
+    - quiero hacer una predicción
+    - hacer predicción
+    - predecir accidente
+    - analizar accidente
+    - quiero predecir
+    - hacer análisis
+    - necesito una predicción
+    - quiero saber la severidad
+    - analizar severidad
+    - predicción de accidente
+    - comenzar predicción
+    - iniciar predicción
+    - quiero comenzar
+    - hacer una predicción
+    - empezar predicción
+    - nueva predicción
+    - analizar un accidente
+    - evaluar severidad

@@ -26,3 +26,20 @@ rules:
   conversation_start: true
   steps:
   - action: action_session_start
+
+- rule: Activar formulario de prediccion
+  steps:
+  - intent: solicitar_prediccion
+  - action: utter_prediccion_iniciada
+  - action: prediccion_form
+  - active_loop: prediccion_form
+
+- rule: Enviar predicción cuando el formulario termine
+  condition:
+  - active_loop: prediccion_form
+  steps:
+  - action: prediccion_form
+  - active_loop: null
+  - slot_was_set:
+    - requested_slot: null
+  - action: action_hacer_prediccion

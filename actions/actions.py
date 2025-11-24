@@ -1,13 +1,14 @@
 from typing import Any, Text, Dict, List
 from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
-from rasa_sdk.events import SlotSet, SessionStarted, ActionExecuted, FollowupAction
+from rasa_sdk.events import SlotSet, SessionStarted, ActionExecuted
 import requests
 import re
 import random
 
 # URL base de tu API Flask en Render
 API_BASE_URL = "https://api-ia-o027.onrender.com"
+
 
 class ActionSessionStart(Action):
     """Acción que se ejecuta al iniciar una nueva sesión"""
@@ -303,3 +304,100 @@ class ActionVerificarAutenticacion(Action):
             dispatcher.utter_message(text=random.choice(mensajes))
         
         return []
+
+
+class ActionHacerPrediccion(Action):
+    """Acción para hacer la predicción llamando a la API"""
+
+    def name(self) -> Text:
+        return "action_hacer_prediccion"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+        # Verificar autenticación
+        autenticado = tracker.get_slot("autenticado")
+        id_usuario = tracker.get_slot("id_usuario")
+        
+        if not autenticado or not id_usuario:
+            dispatcher.utter_message(text="🔐 Debes iniciar sesión para hacer predicciones.")
+            return []
+
+        # Recopilar todos los datos del formulario
+        try:
+            datos_prediccion = {
+                "id_usuario": int(id_usuario),
+                "Day_of_Week": int(tracker.get_slot("day_of_week")),
+                "Junction_Control": int(tracker.get_slot("junction_control")),
+                "Junction_Detail": int(tracker.get_slot("junction_detail")),
+                "Light_Conditions": int(tracker.get_slot("light_conditions")),
+                "Local_Authority_(District)": int(tracker.get_slot("local_authority")),
+                "Road_Surface_Conditions": int(tracker.get_slot("road_surface")),
+                "Road_Type": int(tracker.get_slot("road_type")),
+                "Speed_limit": int(tracker.get_slot("speed_limit")),
+                "Urban_or_Rural_Area": int(tracker.get_slot("urban_rural")),
+                "Weather_Conditions": int(tracker.get_slot("weather")),
+                "Vehicle_Type": int(tracker.get_slot("vehicle_type")),
+                "Number_of_Casualties": int(tracker.get_slot("casualties")),
+                "Number_of_Vehicles": int(tracker.get_slot("num_vehicles"))
+            }
+            
+            print(f"📊 DEBUG PREDICCIÓN - Datos recopilados: {datos_prediccion}")
+            
+            # Llamar a la API de predicción
+            response = requests.post(
+                f"{API_BASE_URL}/predict",
+                json=datos_prediccion,
+                headers={"Content-Type": "application/json"},
+                timeout=60
+            )
+            
+            print(f"📊 DEBUG PREDICCIÓN - Status Code: {response.status_code}")
+            
+            if response.status_code == 200:
+                resultado = response.json()
+                print(f"📊 DEBUG PREDICCIÓN - Respuesta: {resultado}")
+                
+                # Formatear el mensaje de respuesta
+                mensaje = f"""
+🎯 **RESULTADOS DE LA PREDICCIÓN** 🎯
+
+📊 **Modelos de IA:**
+• Random Forest: {resultado.get('RandomForest', 'N/A')}
+• SVM: {resultado.get('SVM', 'N/A')}
+• KNN: {resultado.get('KNN', 'N/A')}
+
+🏆 **Mejor Modelo:** {resultado.get('MejorModelo', 'Random Forest')}
+
+✅ {resultado.get('Guardado', 'Predicción guardada')}
+
+💡 **Recuerda:** Esta es una predicción basada en datos históricos. Siempre mantén precaución en las vías.
+"""
+                dispatcher.utter_message(text=mensaje)
+                
+                # Limpiar los slots del formulario
+                return [
+                    SlotSet("day_of_week", None),
+                    SlotSet("junction_control", None),
+                    SlotSet("junction_detail", None),
+                    SlotSet("light_conditions", None),
+                    SlotSet("local_authority", None),
+                    SlotSet("road_surface", None),
+                    SlotSet("road_type", None),
+                    SlotSet("speed_limit", None),
+                    SlotSet("urban_rural", None),
+                    SlotSet("weather", None),
+                    SlotSet("vehicle_type", None),
+                    SlotSet("casualties", None),
+                    SlotSet("num_vehicles", None)
+                ]
+            else:
+                error = response.json().get("error", "Error desconocido")
+                dispatcher.utter_message(text=f"❌ Error al hacer la predicción: {error}")
+                return []
+                
+        except Exception as e:
+            print(f"❌ ERROR en predicción: {e}")
+            dispatcher.utter_message(text="🔴 Hubo un error al procesar la predicción. Por favor, intenta de nuevo.")
+            return []
