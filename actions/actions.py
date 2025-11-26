@@ -85,6 +85,8 @@ class ActionLogin(Action):
                 data = response.json()
                 id_usuario = data.get("id_usuario")
                 
+                print(f"✅ DEBUG LOGIN - Usuario '{usuario}' autenticado con ID: {id_usuario} (tipo: {type(id_usuario)})")
+                
                 # Mensajes variados de login exitoso
                 mensajes_exitosos = [
                     f"✅ ¡Bienvenido de vuelta, {usuario}! Has iniciado sesión correctamente. 🎉",
@@ -98,6 +100,8 @@ class ActionLogin(Action):
                 
                 # Enviar mensaje de bienvenida con información del bot
                 dispatcher.utter_message(response="utter_bienvenida_post_login")
+                
+                print(f"✅ DEBUG LOGIN - Guardando en slot id_usuario: '{id_usuario}' como string")
                 
                 return [
                     SlotSet("id_usuario", str(id_usuario)),
@@ -326,6 +330,8 @@ class ActionHacerPrediccion(Action):
 
         # Recopilar todos los datos del formulario
         try:
+            print(f"📊 DEBUG PREDICCIÓN - id_usuario del slot: '{id_usuario}' (tipo: {type(id_usuario)})")
+            
             datos_prediccion = {
                 "id_usuario": int(id_usuario),
                 "Day_of_Week": int(tracker.get_slot("day_of_week")),
@@ -343,7 +349,8 @@ class ActionHacerPrediccion(Action):
                 "Number_of_Vehicles": int(tracker.get_slot("num_vehicles"))
             }
             
-            print(f"📊 DEBUG PREDICCIÓN - Datos recopilados: {datos_prediccion}")
+            print(f"📊 DEBUG PREDICCIÓN - Enviando a API con id_usuario: {datos_prediccion['id_usuario']} (tipo: {type(datos_prediccion['id_usuario'])})")
+            print(f"📊 DEBUG PREDICCIÓN - Datos completos: {datos_prediccion}")
             
             # Llamar a la API de predicción
             response = requests.post(
@@ -401,3 +408,130 @@ class ActionHacerPrediccion(Action):
             print(f"❌ ERROR en predicción: {e}")
             dispatcher.utter_message(text="🔴 Hubo un error al procesar la predicción. Por favor, intenta de nuevo.")
             return []
+
+
+class ActionEnviarHistorial(Action):
+    """Acción para solicitar el email y enviar el historial por correo"""
+
+    def name(self) -> Text:
+        return "action_enviar_historial"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+        # Verificar autenticación
+        autenticado = tracker.get_slot("autenticado")
+        id_usuario = tracker.get_slot("id_usuario")
+        
+        if not autenticado or not id_usuario:
+            mensajes = [
+                "🔐 Primero debes iniciar sesión para ver tu historial.",
+                "🔒 Necesitas autenticarte para acceder a tu historial.",
+                "👤 Por favor inicia sesión primero para consultar tu historial."
+            ]
+            dispatcher.utter_message(text=random.choice(mensajes))
+            return []
+
+        # Obtener email del slot
+        email = tracker.get_slot("email")
+        
+        # Si no hay email, extraerlo del último mensaje
+        if not email:
+            ultimo_mensaje = tracker.latest_message.get('text', '')
+            email = self.extraer_email(ultimo_mensaje)
+        
+        # Si aún no hay email, solicitarlo
+        if not email:
+            dispatcher.utter_message(response="utter_pedir_email")
+            return []
+        
+        # Validar formato de email
+        if not self.validar_email(email):
+            dispatcher.utter_message(text="❌ El formato del email no es válido. Por favor, proporciona un correo válido.")
+            return [SlotSet("email", None)]
+        
+        try:
+            # Llamar a la API para enviar el historial
+            print(f"📧 DEBUG HISTORIAL - id_usuario del slot: '{id_usuario}' (tipo: {type(id_usuario)})")
+            print(f"📧 DEBUG HISTORIAL - Convirtiendo a int: {int(id_usuario)}")
+            print(f"📧 DEBUG HISTORIAL - Enviando a: {email} para usuario: {id_usuario}")
+            
+            response = requests.post(
+                f"{API_BASE_URL}/enviar_historial",
+                json={"id_usuario": int(id_usuario), "email": email},
+                headers={"Content-Type": "application/json"},
+                timeout=120
+            )
+            
+            print(f"📧 DEBUG HISTORIAL - Status Code: {response.status_code}")
+            if response.status_code != 200:
+                print(f"📧 DEBUG HISTORIAL - Respuesta de error: {response.text}")
+            
+            if response.status_code == 200:
+                data = response.json()
+                total = data.get("total_predicciones", 0)
+                
+                mensajes_exitosos = [
+                    f"✅ ¡Listo! He enviado tu historial con {total} predicciones a {email}. 📧\n\nRevisa tu bandeja de entrada (y spam si no lo ves).",
+                    f"🎉 ¡Historial enviado! {total} predicciones han sido enviadas a {email}. 📬\n\nChequea tu correo.",
+                    f"📨 ¡Perfecto! Tu PDF con {total} predicciones está en camino a {email}. ✉️\n\nRevisa tu correo en unos momentos.",
+                    f"✨ ¡Hecho! He enviado {total} predicciones a tu correo {email}. 💌\n\nLlega en breve."
+                ]
+                
+                dispatcher.utter_message(text=random.choice(mensajes_exitosos))
+                return [SlotSet("email", None)]
+                
+            elif response.status_code == 404:
+                mensajes_sin_datos = [
+                    "📭 No tienes predicciones guardadas aún.\n\n¡Haz tu primera predicción para comenzar tu historial!",
+                    "🤷 Todavía no has realizado ninguna predicción.\n\n¿Quieres hacer una ahora?",
+                    "📊 Tu historial está vacío. ¡Empieza haciendo tu primera predicción!"
+                ]
+                dispatcher.utter_message(text=random.choice(mensajes_sin_datos))
+                return [SlotSet("email", None)]
+                
+            else:
+                error_msg = response.json().get("error", "Error desconocido")
+                mensajes_error = [
+                    f"❌ No pude enviar el historial: {error_msg}",
+                    f"🔴 Hubo un problema al enviar el correo: {error_msg}",
+                    f"⚠️ Error al procesar tu solicitud: {error_msg}"
+                ]
+                dispatcher.utter_message(text=random.choice(mensajes_error))
+                return [SlotSet("email", None)]
+                
+        except requests.exceptions.Timeout:
+            dispatcher.utter_message(text="⏱️ La solicitud tomó demasiado tiempo. Por favor, intenta de nuevo.")
+            return [SlotSet("email", None)]
+            
+        except requests.exceptions.RequestException as e:
+            mensajes_error = [
+                "🔴 Error al conectar con el servidor. Por favor, intenta más tarde.",
+                "⚠️ Problema de conexión. Intenta nuevamente en unos momentos.",
+                "❌ No pude comunicarme con el servidor. Reintenta pronto."
+            ]
+            dispatcher.utter_message(text=random.choice(mensajes_error))
+            print(f"Error en envío de historial: {e}")
+            return [SlotSet("email", None)]
+
+    def extraer_email(self, texto: str) -> str:
+        """Extrae el email del texto usando expresiones regulares"""
+        # Patrón para detectar emails
+        patron = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
+        match = re.search(patron, texto)
+        
+        if match:
+            email = match.group(0)
+            print(f"✅ DEBUG - Email extraído: {email}")
+            return email
+        
+        print(f"❌ DEBUG - No se pudo extraer email del texto: '{texto}'")
+        return None
+
+    def validar_email(self, email: str) -> bool:
+        """Valida el formato del email"""
+        if not email:
+            return False
+        patron = r'^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}$'
+        return bool(re.match(patron, email))

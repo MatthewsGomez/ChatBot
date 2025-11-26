@@ -303,17 +303,15 @@ class ValidatePrediccionForm(FormValidationAction):
         """Validar límite de velocidad"""
         texto = str(slot_value).strip()
         
-        velocidades_validas = [30, 40, 50, 60, 70, 80, 90, 100, 110, 120]
-        
         try:
             valor = int(float(texto))
-            if valor in velocidades_validas:
+            if valor >= 0:
                 print(f"✅ DEBUG - Velocidad: {valor}")
                 return {"speed_limit": valor}
         except:
             pass
         
-        dispatcher.utter_message(text=f"❌ Velocidad no válida. Opciones: {', '.join(map(str, velocidades_validas))} km/h")
+        dispatcher.utter_message(text="❌ No entendí el límite de velocidad. Ejemplos: '30', '40', '50', '60', '70', '80', '90', '100', '110', '120', '150', '200'")
         return {"speed_limit": None}
 
     def validate_urban_rural(

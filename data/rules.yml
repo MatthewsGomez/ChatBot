@@ -43,3 +43,13 @@ rules:
   - slot_was_set:
     - requested_slot: null
   - action: action_hacer_prediccion
+
+- rule: solicitar historial
+  steps:
+  - intent: solicitar_historial
+  - action: action_enviar_historial
+
+- rule: Enviar historial tras proporcionar email
+  steps:
+  - intent: proporcionar_email
+  - action: action_enviar_historial

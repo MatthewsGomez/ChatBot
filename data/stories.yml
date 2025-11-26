@@ -123,3 +123,21 @@ stories:
   - active_loop: prediccion_form
   - active_loop: null
   - action: action_hacer_prediccion
+
+- story: solicitar y enviar historial
+  steps:
+  - slot_was_set:
+    - autenticado: true
+  - intent: solicitar_historial
+  - action: action_enviar_historial
+
+- story: historial despues de login
+  steps:
+  - intent: solicitar_login
+  - action: utter_pedir_credenciales_registro
+  - intent: proporcionar_credenciales
+  - action: action_login
+  - slot_was_set:
+    - autenticado: true
+  - intent: solicitar_historial
+  - action: action_enviar_historial

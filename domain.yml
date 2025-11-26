@@ -13,10 +13,13 @@ intents:
   - proporcionar_credenciales
   - session_start
   - solicitar_prediccion
+  - solicitar_historial
+  - proporcionar_email
 
 entities:
   - usuario
   - contraseña
+  - email
   - dia_semana
   - control_cruce
   - detalle_cruce
@@ -43,6 +46,12 @@ slots:
     mappings:
       - type: from_entity
         entity: contraseña
+  
+  email:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: email
   
   id_usuario:
     type: text
@@ -258,8 +267,13 @@ responses:
   - text: "👤 ¡Hola! Necesito que inicies sesión para poder ayudarte.\n\n¿Ya tienes cuenta?"
 
   utter_bienvenida_post_login:
-  - text: "🎉 ¡Bienvenido al Sistema de Predicción de Severidad de Accidentes!\n\n🚗 Puedo ayudarte a predecir qué tan grave podría ser un accidente basándome en diferentes factores.\n\n📊 Te daré una predicción sobre si el accidente podría ser:\n• 💚 Leve (sin heridos graves)\n• 🚑 Grave (con heridos)\n• 🚨 Muy grave (con fallecidos)\n\n💬 Escribe 'quiero hacer una predicción' para comenzar.\n\n¿En qué puedo ayudarte hoy?"
-  - text: "✨ ¡Genial! Ya estás dentro del sistema.\n\n🤖 Soy tu asistente de análisis de accidentes de tránsito.\n\n🎯 Te daré predicciones precisas para ayudarte a entender el nivel de riesgo.\n\n💬 Di 'hacer predicción' cuando estés listo.\n\n¿Qué información necesitas?"
+  - text: "🎉 ¡Bienvenido al Sistema de Predicción de Severidad de Accidentes!\n\n🚗 Puedo ayudarte a predecir qué tan grave podría ser un accidente basándome en diferentes factores.\n\n📊 Te daré una predicción sobre si el accidente podría ser:\n• 💚 Leve (sin heridos graves)\n• 🚑 Grave (con heridos)\n• 🚨 Muy grave (con fallecidos)\n\n💬 Escribe 'quiero hacer una predicción' para comenzar.\n📋 O 'ver mi historial' para consultar tus predicciones anteriores.\n\n¿En qué puedo ayudarte hoy?"
+  - text: "✨ ¡Genial! Ya estás dentro del sistema.\n\n🤖 Soy tu asistente de análisis de accidentes de tránsito.\n\n🎯 Te daré predicciones precisas para ayudarte a entender el nivel de riesgo.\n\n💬 Di 'hacer predicción' cuando estés listo.\n📧 O 'ver historial' para revisar tus análisis anteriores.\n\n¿Qué información necesitas?"
+
+  utter_pedir_email:
+  - text: "📧 Por favor, proporciona tu correo electrónico donde quieres recibir el historial.\n\nEjemplo: micorreo@ejemplo.com"
+  - text: "📬 ¿A qué correo electrónico te lo envío?\n\nEscribe tu email."
+  - text: "✉️ Necesito tu dirección de correo para enviarte el PDF.\n\n¿Cuál es tu email?"
 
   utter_ask_day_of_week:
   - text: "📅 ¿En qué día de la semana ocurre/ocurrió el accidente?\n\n0: Domingo\n1: Lunes\n2: Martes\n3: Miércoles\n4: Jueves\n5: Viernes\n6: Sábado\n\nEscribe el número:"
@@ -283,7 +297,7 @@ responses:
   - text: "🚗 ¿Qué tipo de vía es?\n\n0: Calle\n1: Avenida\n2: Carretera principal\n3: Carretera secundaria\n4: Rotonda\n5: Otro\n\nEscribe el número:"
 
   utter_ask_speed_limit:
-  - text: "⚡ ¿Cuál es el límite de velocidad en km/h?\n\nOpciones: 30, 40, 50, 60, 70, 80, 90, 100, 110, 120\n\nEscribe el número:"
+  - text: "⚡ ¿Cuál es el límite de velocidad en km/h?\n\nEscribe el número:"
 
   utter_ask_urban_rural:
   - text: "🏙️ ¿El área es urbana o rural?\n\n0: Urbano\n1: Rural\n\nEscribe el número:"
@@ -309,6 +323,7 @@ actions:
   - action_verificar_autenticacion
   - action_session_start
   - action_hacer_prediccion
+  - action_enviar_historial
   - validate_prediccion_form
 
 session_config:

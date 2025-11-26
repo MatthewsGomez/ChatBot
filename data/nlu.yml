@@ -180,3 +180,35 @@ nlu:
     - nueva predicción
     - analizar un accidente
     - evaluar severidad
+
+- intent: solicitar_historial
+  examples: |
+    - quiero ver mi historial
+    - muéstrame mi historial
+    - ver historial
+    - mi historial
+    - historial de predicciones
+    - quiero mi historial
+    - dame mi historial
+    - ver mis predicciones anteriores
+    - quiero ver mis predicciones
+    - muéstrame mis predicciones
+    - historial
+    - mis registros
+    - predicciones anteriores
+    - consultar historial
+    - revisar historial
+    - historial completo
+
+- intent: proporcionar_email
+  examples: |
+    - mi correo es [usuario@example.com](email)
+    - [test@gmail.com](email)
+    - envíalo a [maria@hotmail.com](email)
+    - mi email es [juan123@yahoo.com](email)
+    - [correo@dominio.com](email)
+    - a este correo [myemail@test.com](email)
+    - mándalo a [contacto@empresa.com](email)
+    - [admin@sistema.com](email)
+    - el correo es [user@mail.com](email)
+    - [nombre.apellido@email.com](email)
