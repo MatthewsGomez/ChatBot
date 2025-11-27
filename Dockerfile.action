@@ -1,0 +1,21 @@
+# Usar la imagen oficial de Rasa SDK
+FROM rasa/rasa-sdk:3.6.2
+
+# Cambiar a usuario root para instalar dependencias
+USER root
+
+# Copiar el directorio de acciones
+COPY ./actions /app/actions
+COPY requirements.txt /app/
+
+# Instalar dependencias adicionales
+RUN pip install --no-cache-dir -r /app/requirements.txt
+
+# Cambiar al usuario no root
+USER 1001
+
+# Exponer el puerto 5055
+EXPOSE 5055
+
+# Comando para ejecutar el servidor de acciones
+CMD ["start", "--actions", "actions"]
