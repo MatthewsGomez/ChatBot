@@ -29,6 +29,19 @@ class WhatsAppConnector(InputChannel):
         self.page_access_token = page_access_token
         self.phone_number_id = phone_number_id
 
+    @classmethod
+    def from_credentials(cls, credentials: Optional[Dict[Text, Any]]) -> "WhatsAppConnector":
+        """Create WhatsAppConnector from credentials."""
+        if not credentials:
+            raise ValueError("WhatsAppConnector requires credentials")
+        
+        return cls(
+            verify_token=credentials.get("verify_token"),
+            app_secret=credentials.get("app_secret"),
+            page_access_token=credentials.get("page_access_token"),
+            phone_number_id=credentials.get("phone_number_id"),
+        )
+
     def blueprint(
         self, on_new_message: Callable[[UserMessage], Awaitable[Any]]
     ) -> Blueprint:
