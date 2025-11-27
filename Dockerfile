@@ -28,4 +28,5 @@ USER 1001
 EXPOSE 5005
 
 # Comando para ejecutar el servidor Rasa usando el script
-CMD ["/app/start.sh"]
+# Usamos ENTRYPOINT para sobrescribir el de la imagen base
+ENTRYPOINT ["/bin/bash", "/app/start.sh"]
