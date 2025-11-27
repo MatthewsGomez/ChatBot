@@ -17,15 +17,15 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Entrenar el modelo durante la construcción de la imagen
 RUN rasa train
 
+# Copiar script de inicio y darle permisos (como root)
+COPY start.sh /app/start.sh
+RUN chmod +x /app/start.sh
+
 # Cambiar al usuario no root predeterminado de Rasa
 USER 1001
 
 # Exponer el puerto 5005
 EXPOSE 5005
-
-# Copiar script de inicio
-COPY start.sh /app/start.sh
-RUN chmod +x /app/start.sh
 
 # Comando para ejecutar el servidor Rasa usando el script
 CMD ["/app/start.sh"]
