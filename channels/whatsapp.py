@@ -2,7 +2,7 @@ import logging
 import json
 from typing import Text, List, Any, Dict, Optional, Callable, Awaitable
 
-from rasa.core.channels.channel import InputChannel, OutputChannel, UserMessage, Collector
+from rasa.core.channels.channel import InputChannel, OutputChannel, UserMessage
 from sanic import Blueprint, response
 from sanic.request import Request
 from sanic.response import HTTPResponse
