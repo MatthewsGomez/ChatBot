@@ -23,7 +23,9 @@ USER 1001
 # Exponer el puerto 5005
 EXPOSE 5005
 
-# Comando para ejecutar el servidor Rasa
-# Habilitamos la API y permitimos CORS
-# Usamos la variable PORT que Render proporciona (shell form para expandir variables)
-CMD rasa run --enable-api --cors "*" --port ${PORT:-5005} --debug
+# Copiar script de inicio
+COPY start.sh /app/start.sh
+RUN chmod +x /app/start.sh
+
+# Comando para ejecutar el servidor Rasa usando el script
+CMD ["/app/start.sh"]
