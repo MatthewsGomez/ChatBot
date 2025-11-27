@@ -1,6 +1,6 @@
 services:
   # Servicio para el Servidor de Acciones
-  - type: pserv
+  - type: web
     name: chatbot-actions
     env: docker
     dockerfilePath: ./Dockerfile.action
