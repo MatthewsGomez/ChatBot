@@ -25,3 +25,6 @@ Thumbs.db
 
 # Environment variables - IMPORTANTE: No subir credenciales a GitHub
 .env
+
+# Credentials - IMPORTANTE: No subir credenciales a GitHub
+credentials.yml
