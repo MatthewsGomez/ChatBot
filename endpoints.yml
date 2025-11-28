@@ -12,7 +12,7 @@
 
 action_endpoint:
   # Usa la variable de entorno si existe, si no, usa localhost (para pruebas locales)
-  url: "${ACTION_ENDPOINT_URL:-http://localhost:5055/webhook}"
+  url: "http://localhost:5055/webhook"
 
 # Tracker store which is used to store the conversations.
 # By default the conversations are stored in memory.

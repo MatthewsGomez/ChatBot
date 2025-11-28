@@ -276,43 +276,43 @@ responses:
   - text: "✉️ Necesito tu dirección de correo para enviarte el PDF.\n\n¿Cuál es tu email?"
 
   utter_ask_day_of_week:
-  - text: "📅 ¿En qué día de la semana ocurre/ocurrió el accidente?\n\n0: Domingo\n1: Lunes\n2: Martes\n3: Miércoles\n4: Jueves\n5: Viernes\n6: Sábado\n\nEscribe el número:"
+  - text: "📅 ¿En qué día de la semana ocurre/ocurrió el accidente?"
 
   utter_ask_junction_control:
-  - text: "🚦 ¿Qué tipo de control hay en el cruce?\n\n0: Sin control\n1: Señales de stop\n2: Semáforo\n3: Rotonda\n4: Semáforo con sensor\n5: Señales de prioridad\n6: Otro control\n\nEscribe el número:"
+  - text: "🚦 ¿Qué tipo de control hay en el cruce?"
 
   utter_ask_junction_detail:
-  - text: "🔀 ¿Qué tipo de cruce es?\n\n0: Cruce simple\n1: Cruce en T\n2: Cruce en Y\n3: Cruce múltiple\n4: Rotonda\n5: Entrada/salida privada\n6: Otro\n\nEscribe el número:"
+  - text: "🔀 ¿Qué tipo de cruce es?"
 
   utter_ask_light_conditions:
-  - text: "💡 ¿Cuáles son las condiciones de luz?\n\n0: Plena luz del día\n1: Oscuro sin iluminación\n2: Oscuro con iluminación\n3: Amanecer/Atardecer\n4: Niebla o humo\n5: Otro\n\nEscribe el número:"
+  - text: "💡 ¿Cuáles son las condiciones de luz?"
 
   utter_ask_local_authority:
-  - text: "📍 ¿En qué distrito ocurre?\n\nOpciones: 0, 1, 3, 4, 76, 159, 176, 267, 384\n\nEscribe el número:"
+  - text: "📍 ¿En qué distrito ocurre?"
 
   utter_ask_road_surface:
-  - text: "🛣️ ¿Cuál es la condición de la superficie de la vía?\n\n0: Asfalto seco\n1: Asfalto húmedo\n2: Hielo o nieve\n3: Grava\n4: Otro\n\nEscribe el número:"
+  - text: "🛣️ ¿Cuál es la condición de la superficie de la vía?"
 
   utter_ask_road_type:
-  - text: "🚗 ¿Qué tipo de vía es?\n\n0: Calle\n1: Avenida\n2: Carretera principal\n3: Carretera secundaria\n4: Rotonda\n5: Otro\n\nEscribe el número:"
+  - text: "🚗 ¿Qué tipo de vía es?:"
 
   utter_ask_speed_limit:
-  - text: "⚡ ¿Cuál es el límite de velocidad en km/h?\n\nEscribe el número:"
+  - text: "⚡ ¿Cuál es el límite de velocidad en km/h?"
 
   utter_ask_urban_rural:
-  - text: "🏙️ ¿El área es urbana o rural?\n\n0: Urbano\n1: Rural\n\nEscribe el número:"
+  - text: "🏙️ ¿El área es urbana o rural?"
 
   utter_ask_weather:
-  - text: "🌤️ ¿Cuáles son las condiciones climáticas?\n\n0: Despejado\n1: Lluvia ligera\n2: Lluvia intensa\n3: Niebla\n4: Nieve\n5: Viento fuerte\n6: Otro\n\nEscribe el número:"
+  - text: "🌤️ ¿Cuáles son las condiciones climáticas?"
 
   utter_ask_vehicle_type:
-  - text: "🚙 ¿Qué tipo de vehículo está involucrado?\n\n0: Coche\n1: Motocicleta\n2: Camión\n3: Autobús\n4: Bicicleta\n5: Peatón\n6: Otro\n\nEscribe el número:"
+  - text: "🚙 ¿Qué tipo de vehículo está involucrado?"
 
   utter_ask_casualties:
-  - text: "🚑 ¿Cuántas víctimas potenciales hay?\n\n0: Sin víctimas\n1: 1 víctima\n2: 2 víctimas\n3: 3 víctimas\n4: 4 víctimas\n5: 5 víctimas o más\n\nEscribe el número:"
+  - text: "🚑 ¿Cuántas víctimas potenciales hay?"
 
   utter_ask_num_vehicles:
-  - text: "🚗🚗 ¿Cuántos vehículos están involucrados?\n\n1: 1 vehículo\n2: 2 vehículos\n3: 3 vehículos\n4: 4 vehículos\n5: 5 vehículos o más\n\nEscribe el número:"
+  - text: "🚗🚗 ¿Cuántos vehículos están involucrados?"
 
   utter_prediccion_iniciada:
   - text: "🔮 ¡Perfecto! Voy a hacerte algunas preguntas para analizar el accidente.\n\n📝 Son 13 preguntas rápidas. ¡Empecemos!"

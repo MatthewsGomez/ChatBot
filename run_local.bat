@@ -4,31 +4,6 @@ echo Iniciando Servidor de Rasa Local
 echo ========================================
 echo.
 
-REM Verificar si existe el archivo .env
-if not exist ".env" (
-    echo ERROR: No se encontró el archivo .env
-    echo.
-    echo Por favor, copia .env.example a .env y configura tus credenciales:
-    echo   copy .env.example .env
-    echo.
-    echo Luego edita .env con tus credenciales de WhatsApp.
-    pause
-    exit /b 1
-)
-
-REM Cargar variables de entorno desde .env
-echo [0/3] Cargando variables de entorno desde .env...
-for /f "usebackq tokens=1,* delims==" %%a in (".env") do (
-    set "line=%%a"
-    REM Ignorar líneas vacías y comentarios
-    if not "!line!"=="" (
-        if not "!line:~0,1!"=="#" (
-            set "%%a=%%b"
-        )
-    )
-)
-echo Variables de entorno cargadas.
-
 REM Verificar si Rasa está instalado
 where rasa >nul 2>nul
 if %ERRORLEVEL% NEQ 0 (

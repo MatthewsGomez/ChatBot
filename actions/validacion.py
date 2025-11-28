@@ -230,17 +230,17 @@ class ValidatePrediccionForm(FormValidationAction):
         """Validar distrito"""
         texto = str(slot_value).strip()
         
-        distritos_validos = [0, 1, 3, 4, 76, 159, 176, 267, 384]
+        #distritos_validos = [0, 1, 3, 4, 76, 159, 176, 267, 384]
         
         try:
             valor = int(float(texto))
-            if valor in distritos_validos:
+            if valor >= 0:
                 print(f"✅ DEBUG - Distrito: {valor}")
                 return {"local_authority": valor}
         except:
             pass
         
-        dispatcher.utter_message(text=f"❌ Distrito no válido. Distritos disponibles: {', '.join(map(str, distritos_validos))}")
+        dispatcher.utter_message(text=f"❌ Distrito no válido.")
         return {"local_authority": None}
 
     def validate_road_surface(
