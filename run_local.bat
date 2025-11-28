@@ -26,8 +26,8 @@ echo.
 echo [2/3] Iniciando servidor de acciones en puerto 5055...
 start "Rasa Actions Server" cmd /k "rasa run actions --port 5055"
 
-REM Esperar 3 segundos para que el servidor de acciones inicie
-timeout /t 3 /nobreak >nul
+REM Esperar 5 segundos para que el servidor de acciones inicie
+timeout /t 5 /nobreak >nul
 
 echo.
 echo [3/3] Iniciando servidor Rasa en puerto 5005...

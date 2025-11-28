@@ -62,7 +62,9 @@ class ActionLogin(Action):
             mensajes = [
                 "❌ No pude obtener tus credenciales. Por favor, escribe en formato:\n\nusuario: tu_usuario, contraseña: tu_contraseña",
                 "🔴 Ups, no encontré tus datos. Recuerda el formato:\n\nusuario: tu_usuario, contraseña: tu_contraseña",
-                "⚠️ No pude leer tus credenciales. Asegúrate de usar el formato:\n\nusuario: tu_usuario, contraseña: tu_contraseña"
+                "⚠️ No pude leer tus credenciales. Asegúrate de usar el formato:\n\nusuario: tu_usuario, contraseña: tu_contraseña",
+                "🔐 Faltan tus datos de acceso. Escríbelos así:\n\nusuario: tu_usuario, contraseña: tu_contraseña",
+                "📝 Necesito tus credenciales en este formato:\n\nusuario: tu_usuario, contraseña: tu_contraseña"
             ]
             dispatcher.utter_message(text=random.choice(mensajes))
             return []
@@ -195,7 +197,9 @@ class ActionRegistro(Action):
             mensajes = [
                 "❌ No pude obtener tus credenciales. Por favor, escribe en formato:\n\nusuario: tu_usuario, contraseña: tu_contraseña",
                 "🔴 No encontré tus datos. Usa el formato:\n\nusuario: tu_usuario, contraseña: tu_contraseña",
-                "⚠️ Necesito tus credenciales en este formato:\n\nusuario: tu_usuario, contraseña: tu_contraseña"
+                "⚠️ Necesito tus credenciales en este formato:\n\nusuario: tu_usuario, contraseña: tu_contraseña",
+                "📝 Para registrarte escribe así:\n\nusuario: tu_usuario, contraseña: tu_contraseña",
+                "🔐 Faltan tus datos. Formato correcto:\n\nusuario: tu_usuario, contraseña: tu_contraseña"
             ]
             dispatcher.utter_message(text=random.choice(mensajes))
             return []
@@ -232,7 +236,8 @@ class ActionRegistro(Action):
                     f"❌ Error en el registro: {error_msg}",
                     f"🔴 No pude crear tu cuenta: {error_msg}",
                     f"⚠️ Hubo un problema: {error_msg}",
-                    f"❗ Registro fallido: {error_msg}"
+                    f"❗ Registro fallido: {error_msg}",
+                    f"🚫 No se pudo completar el registro: {error_msg}"
                 ]
                 dispatcher.utter_message(text=random.choice(mensajes_error))
                 return [SlotSet("contraseña", None)]
@@ -242,7 +247,8 @@ class ActionRegistro(Action):
                 "🔴 Error al conectar con el servidor. Por favor, intenta más tarde.",
                 "⚠️ Problema de conexión. Intenta registrarte nuevamente en unos momentos.",
                 "❌ No pude comunicarme con el servidor. Reintenta pronto.",
-                "🔌 Error de red. Por favor, verifica tu conexión e intenta de nuevo."
+                "🔌 Error de red. Por favor, verifica tu conexión e intenta de nuevo.",
+                "🚫 Sin conexión al servidor. Intenta más tarde."
             ]
             dispatcher.utter_message(text=random.choice(mensajes_error))
             print(f"Error en registro: {e}")
@@ -325,7 +331,14 @@ class ActionHacerPrediccion(Action):
         id_usuario = tracker.get_slot("id_usuario")
         
         if not autenticado or not id_usuario:
-            dispatcher.utter_message(text="🔐 Debes iniciar sesión para hacer predicciones.")
+            mensajes = [
+                "🔐 Debes iniciar sesión para hacer predicciones.",
+                "🔒 Primero necesitas autenticarte para usar esta función.",
+                "⚠️ No has iniciado sesión. Por favor inicia sesión primero.",
+                "� Acceso restringido. Debes estar autenticado.",
+                "👤 Inicia sesión para acceder a las predicciones."
+            ]
+            dispatcher.utter_message(text=random.choice(mensajes))
             return []
 
         # Recopilar todos los datos del formulario
@@ -366,8 +379,9 @@ class ActionHacerPrediccion(Action):
                 resultado = response.json()
                 print(f"📊 DEBUG PREDICCIÓN - Respuesta: {resultado}")
                 
-                # Formatear el mensaje de respuesta
-                mensaje = f"""
+                # Formatear el mensaje de respuesta - usar variaciones
+                mensajes = [
+                    f"""
 🎯 **RESULTADOS DE LA PREDICCIÓN** 🎯
 
 📊 **Modelos de IA:**
@@ -380,8 +394,65 @@ class ActionHacerPrediccion(Action):
 ✅ {resultado.get('Guardado', 'Predicción guardada')}
 
 💡 **Recuerda:** Esta es una predicción basada en datos históricos. Siempre mantén precaución en las vías.
+""",
+                    f"""
+✨ **ANÁLISIS COMPLETADO** ✨
+
+🤖 **Predicciones por Modelo:**
+🌳 Random Forest: {resultado.get('RandomForest', 'N/A')}
+📊 SVM: {resultado.get('SVM', 'N/A')}
+🔵 KNN: {resultado.get('KNN', 'N/A')}
+
+🌟 **Modelo Destacado:** {resultado.get('MejorModelo', 'Random Forest')}
+
+💾 {resultado.get('Guardado', 'Datos almacenados exitosamente')}
+
+⚠️ **Nota:** Predicción basada en análisis de datos. Conduce siempre con precaución.
+""",
+                    f"""
+🚨 **PREDICCIÓN FINALIZADA** 🚨
+
+🔮 **Resultados de los Algoritmos:**
+🎯 Random Forest → {resultado.get('RandomForest', 'N/A')}
+🎯 SVM → {resultado.get('SVM', 'N/A')}
+🎯 KNN → {resultado.get('KNN', 'N/A')}
+
+🥇 **Algoritmo Más Preciso:** {resultado.get('MejorModelo', 'Random Forest')}
+
+✅ {resultado.get('Guardado', 'Registro guardado en tu historial')}
+
+👉 **Importante:** Resultados predictivos. Conduce con responsabilidad.
+""",
+                    f"""
+📊 **REPORTE DE PREDICCIÓN** 📊
+
+🔍 **Modelos Analizados:**
+▪️ Random Forest: {resultado.get('RandomForest', 'N/A')}
+▪️ SVM: {resultado.get('SVM', 'N/A')}
+▪️ KNN: {resultado.get('KNN', 'N/A')}
+
+🏅 **Modelo Óptimo:** {resultado.get('MejorModelo', 'Random Forest')}
+
+📝 {resultado.get('Guardado', 'Predicción registrada correctamente')}
+
+❗ **Advertencia:** Predicción estadística. Sigue las normas de tránsito.
+""",
+                    f"""
+🔵 **RESULTADOS DEL ANÁLISIS** 🔵
+
+🧠 **Predicciones IA:**
+🎯 RF: {resultado.get('RandomForest', 'N/A')}
+🎯 SVM: {resultado.get('SVM', 'N/A')}
+🎯 KNN: {resultado.get('KNN', 'N/A')}
+
+🥇 **Top Model:** {resultado.get('MejorModelo', 'Random Forest')}
+
+✅ {resultado.get('Guardado', '¡Guardado en tu historial!')}
+
+🔴 **Recuerda:** Análisis predictivo. La seguridad vial es responsabilidad de todos.
 """
-                dispatcher.utter_message(text=mensaje)
+                ]
+                dispatcher.utter_message(text=random.choice(mensajes))
                 
                 # Limpiar los slots del formulario
                 return [
@@ -401,12 +472,26 @@ class ActionHacerPrediccion(Action):
                 ]
             else:
                 error = response.json().get("error", "Error desconocido")
-                dispatcher.utter_message(text=f"❌ Error al hacer la predicción: {error}")
+                mensajes_error = [
+                    f"❌ Error al hacer la predicción: {error}",
+                    f"🔴 No pude procesar la predicción: {error}",
+                    f"⚠️ Problema al generar resultados: {error}",
+                    f"🚫 Fallo en el análisis: {error}",
+                    f"🔴 Error en el sistema de predicción: {error}"
+                ]
+                dispatcher.utter_message(text=random.choice(mensajes_error))
                 return []
                 
         except Exception as e:
             print(f"❌ ERROR en predicción: {e}")
-            dispatcher.utter_message(text="🔴 Hubo un error al procesar la predicción. Por favor, intenta de nuevo.")
+            mensajes_error = [
+                "🔴 Hubo un error al procesar la predicción. Por favor, intenta de nuevo.",
+                "❌ Error procesando tu solicitud. Reintenta en un momento.",
+                "⚠️ Ocurrió un error. Por favor intenta nuevamente.",
+                "🚫 No pude completar la predicción. Intenta de nuevo.",
+                "🔴 Error inesperado. Por favor, reintenta."
+            ]
+            dispatcher.utter_message(text=random.choice(mensajes_error))
             return []
 
 
@@ -428,7 +513,9 @@ class ActionEnviarHistorial(Action):
             mensajes = [
                 "🔐 Primero debes iniciar sesión para ver tu historial.",
                 "🔒 Necesitas autenticarte para acceder a tu historial.",
-                "👤 Por favor inicia sesión primero para consultar tu historial."
+                "👤 Por favor inicia sesión primero para consultar tu historial.",
+                "⚠️ Debes estar autenticado para ver tus predicciones anteriores.",
+                "🚫 Acceso restringido. Inicia sesión para ver el historial."
             ]
             dispatcher.utter_message(text=random.choice(mensajes))
             return []
@@ -448,7 +535,14 @@ class ActionEnviarHistorial(Action):
         
         # Validar formato de email
         if not self.validar_email(email):
-            dispatcher.utter_message(text="❌ El formato del email no es válido. Por favor, proporciona un correo válido.")
+            mensajes = [
+                "❌ El formato del email no es válido. Por favor, proporciona un correo válido.",
+                "🔴 Email inválido. Verifica el formato (ejemplo@correo.com).",
+                "⚠️ El correo que ingresaste no es válido. Intenta de nuevo.",
+                "📧 Formato incorrecto. Escribe un email válido.",
+                "🚫 Email no válido. Usa el formato: usuario@dominio.com"
+            ]
+            dispatcher.utter_message(text=random.choice(mensajes))
             return [SlotSet("email", None)]
         
         try:
@@ -476,7 +570,8 @@ class ActionEnviarHistorial(Action):
                     f"✅ ¡Listo! He enviado tu historial con {total} predicciones a {email}. 📧\n\nRevisa tu bandeja de entrada (y spam si no lo ves).",
                     f"🎉 ¡Historial enviado! {total} predicciones han sido enviadas a {email}. 📬\n\nChequea tu correo.",
                     f"📨 ¡Perfecto! Tu PDF con {total} predicciones está en camino a {email}. ✉️\n\nRevisa tu correo en unos momentos.",
-                    f"✨ ¡Hecho! He enviado {total} predicciones a tu correo {email}. 💌\n\nLlega en breve."
+                    f"✨ ¡Hecho! He enviado {total} predicciones a tu correo {email}. 💌\n\nLlega en breve.",
+                    f"🚀 ¡Envío exitoso! {total} predicciones en camino a {email}. 📩\n\nRevisa tu bandeja."
                 ]
                 
                 dispatcher.utter_message(text=random.choice(mensajes_exitosos))
@@ -486,7 +581,9 @@ class ActionEnviarHistorial(Action):
                 mensajes_sin_datos = [
                     "📭 No tienes predicciones guardadas aún.\n\n¡Haz tu primera predicción para comenzar tu historial!",
                     "🤷 Todavía no has realizado ninguna predicción.\n\n¿Quieres hacer una ahora?",
-                    "📊 Tu historial está vacío. ¡Empieza haciendo tu primera predicción!"
+                    "📊 Tu historial está vacío. ¡Empieza haciendo tu primera predicción!",
+                    "📄 Sin datos aún. Haz una predicción primero.",
+                    "🆕 Historial vacío. ¡Realiza tu primera predicción!"
                 ]
                 dispatcher.utter_message(text=random.choice(mensajes_sin_datos))
                 return [SlotSet("email", None)]
@@ -496,20 +593,31 @@ class ActionEnviarHistorial(Action):
                 mensajes_error = [
                     f"❌ No pude enviar el historial: {error_msg}",
                     f"🔴 Hubo un problema al enviar el correo: {error_msg}",
-                    f"⚠️ Error al procesar tu solicitud: {error_msg}"
+                    f"⚠️ Error al procesar tu solicitud: {error_msg}",
+                    f"🚫 Fallo en el envío del historial: {error_msg}",
+                    f"📧 No se pudo enviar el email: {error_msg}"
                 ]
                 dispatcher.utter_message(text=random.choice(mensajes_error))
                 return [SlotSet("email", None)]
                 
         except requests.exceptions.Timeout:
-            dispatcher.utter_message(text="⏱️ La solicitud tomó demasiado tiempo. Por favor, intenta de nuevo.")
+            mensajes_timeout = [
+                "⏱️ La solicitud tomó demasiado tiempo. Por favor, intenta de nuevo.",
+                "⏳ Tiempo de espera agotado. Reintenta en un momento.",
+                "🕒 El servidor tardó mucho en responder. Intenta nuevamente.",
+                "⚠️ Timeout. Por favor intenta de nuevo.",
+                "⏰ Solicitud expirada. Reintenta por favor."
+            ]
+            dispatcher.utter_message(text=random.choice(mensajes_timeout))
             return [SlotSet("email", None)]
             
         except requests.exceptions.RequestException as e:
             mensajes_error = [
                 "🔴 Error al conectar con el servidor. Por favor, intenta más tarde.",
                 "⚠️ Problema de conexión. Intenta nuevamente en unos momentos.",
-                "❌ No pude comunicarme con el servidor. Reintenta pronto."
+                "❌ No pude comunicarme con el servidor. Reintenta pronto.",
+                "🔌 Error de red. Verifica tu conexión.",
+                "🚫 Sin conexión al servidor. Intenta más tarde."
             ]
             dispatcher.utter_message(text=random.choice(mensajes_error))
             print(f"Error en envío de historial: {e}")

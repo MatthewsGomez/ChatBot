@@ -230,17 +230,17 @@ class ValidatePrediccionForm(FormValidationAction):
         """Validar distrito"""
         texto = str(slot_value).strip()
         
-        #distritos_validos = [0, 1, 3, 4, 76, 159, 176, 267, 384]
+        distritos_validos = [0, 1, 3, 4, 76, 159, 176, 267, 384]
         
         try:
             valor = int(float(texto))
-            if valor >= 0:
+            if valor in distritos_validos:
                 print(f"✅ DEBUG - Distrito: {valor}")
                 return {"local_authority": valor}
         except:
             pass
         
-        dispatcher.utter_message(text=f"❌ Distrito no válido.")
+        dispatcher.utter_message(text=f"❌ Distrito no válido.\nEjemplos: {distritos_validos}")
         return {"local_authority": None}
 
     def validate_road_surface(
@@ -303,15 +303,17 @@ class ValidatePrediccionForm(FormValidationAction):
         """Validar límite de velocidad"""
         texto = str(slot_value).strip()
         
+        limites_validos = [30, 40, 50, 60, 70, 80, 90, 100, 110, 120]
+
         try:
             valor = int(float(texto))
-            if valor >= 0:
+            if valor in limites_validos:
                 print(f"✅ DEBUG - Velocidad: {valor}")
                 return {"speed_limit": valor}
         except:
             pass
         
-        dispatcher.utter_message(text="❌ No entendí el límite de velocidad. Ejemplos: '30', '40', '50', '60', '70', '80', '90', '100', '110', '120', '150', '200'")
+        dispatcher.utter_message(text=f"❌ No entendí el límite de velocidad. Ejemplos: {limites_validos}")
         return {"speed_limit": None}
 
     def validate_urban_rural(

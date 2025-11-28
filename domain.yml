@@ -221,12 +221,10 @@ responses:
   - text: "¡Saludos! ¿Todo bien?"
 
   utter_animar:
-  - text: "Aquí tienes algo para animarte:"
-    image: "https://i.imgur.com/nGF1K8f.jpg"
-  - text: "¡Ánimo! Mira esto:"
-    image: "https://i.imgur.com/nGF1K8f.jpg"
-  - text: "Esto te va a alegrar el día:"
-    image: "https://i.imgur.com/nGF1K8f.jpg"
+  - text: "Aquí tienes algo para animarte:\na donde fue la niña despues de la exploción?\na todas partes XD"
+  - text: "¡Ánimo! Mira esto:\nque le pasó al ladron que le cayó un policia gordo?\nle cayó todo el peso de la ley\nJAJAJAJAJAJAJAJ"
+  - text: "Esto te va a alegrar el día:\nque le dijo una iguana a otra iguana?\nsomos iguanitas JEJEJEJE"
+  - text: "¡No te desanimes! Mira esto:\nporque una niña sin piernas no puede jugar futbol?...\nporque es mujer XDXD"
 
   utter_ayudo:
   - text: "¿Te ayudo en algo?"
@@ -253,11 +251,15 @@ responses:
   - text: "Soy un bot especializado en análisis de accidentes de tránsito, creado con Rasa. 🤖"
   - text: "Soy un asistente virtual creado por Rasa para ayudarte con predicciones de severidad de accidentes. 🚦"
   - text: "Soy un bot inteligente que analiza la severidad de accidentes vehiculares. 🚗"
+  - text: "Soy tu asistente automatizado para predicciones de accidentes de tráfico. 🛡️"
+  - text: "Me llamo Bot de Predicción de Accidentes, creado con tecnología Rasa. 🤖🚨"
 
   utter_pedir_credenciales_registro:
-  - text: "📝 Para registrarte, necesito tu usuario y contraseña.\n\nEscribe en formato:\nusuario: tu_usuario, contraseña: tu_contraseña"
+  - text: "📝 Para continuar, necesito tu usuario y contraseña.\n\nEscribe en formato:\nusuario: tu_usuario, contraseña: tu_contraseña"
   - text: "🔐 Por favor ingresa tus datos de registro:\n\nFormato: usuario: tu_usuario, contraseña: tu_contraseña"
   - text: "✍️ Necesito que me proporciones:\n\n• Usuario\n• Contraseña\n\nFormato: usuario: tu_usuario, contraseña: tu_contraseña"
+  - text: "📋 Para continuar necesito:\n\nFormato: usuario: tu_usuario, contraseña: tu_contraseña"
+  - text: "🆕 Para poder proseguir necesito tus credenciales. Escribe así:\n\nusuario: tu_usuario, contraseña: tu_contraseña"
 
   utter_solicitar_login_inicial:
   - text: "🔐 Para comenzar a usar el chat, necesitas iniciar sesión.\n\n¿Ya tienes una cuenta o necesitas registrarte?"
@@ -269,53 +271,114 @@ responses:
   utter_bienvenida_post_login:
   - text: "🎉 ¡Bienvenido al Sistema de Predicción de Severidad de Accidentes!\n\n🚗 Puedo ayudarte a predecir qué tan grave podría ser un accidente basándome en diferentes factores.\n\n📊 Te daré una predicción sobre si el accidente podría ser:\n• 💚 Leve (sin heridos graves)\n• 🚑 Grave (con heridos)\n• 🚨 Muy grave (con fallecidos)\n\n💬 Escribe 'quiero hacer una predicción' para comenzar.\n📋 O 'ver mi historial' para consultar tus predicciones anteriores.\n\n¿En qué puedo ayudarte hoy?"
   - text: "✨ ¡Genial! Ya estás dentro del sistema.\n\n🤖 Soy tu asistente de análisis de accidentes de tránsito.\n\n🎯 Te daré predicciones precisas para ayudarte a entender el nivel de riesgo.\n\n💬 Di 'hacer predicción' cuando estés listo.\n📧 O 'ver historial' para revisar tus análisis anteriores.\n\n¿Qué información necesitas?"
+  - text: "👋 ¡Hola! Bienvenido al sistema de predicción de accidentes.\n\n📈 Analizo la severidad de accidentes basándome en 13 factores clave.\n\n🔮 Predicciones disponibles:\n• Severidad: Leve, Grave o Fatal\n• Modelos: Random Forest, SVM, KNN\n\n✍️ Escribe 'predicción' para empezar.\n📜 O 'historial' para ver registros previos."
+  - text: "🚀 ¡Sistema activado!\n\n💡 Te ayudaré a predecir la gravedad de accidentes de tráfico.\n\n🎯 Proceso simple:\n1️⃣ Hacer predicción (13 preguntas)\n2️⃣ Ver historial (por email)\n\n🤔 ¿Qué deseas hacer?"
+  - text: "🌟 ¡Acceso concedido!\n\n🛡️ Sistema de Predicción de Severidad de Accidentes listo.\n\n📋 Opciones:\n• Nueva predicción\n• Consultar historial\n\n💬 ¿Cómo te ayudo?"
 
   utter_pedir_email:
   - text: "📧 Por favor, proporciona tu correo electrónico donde quieres recibir el historial.\n\nEjemplo: micorreo@ejemplo.com"
   - text: "📬 ¿A qué correo electrónico te lo envío?\n\nEscribe tu email."
   - text: "✉️ Necesito tu dirección de correo para enviarte el PDF.\n\n¿Cuál es tu email?"
+  - text: "📨 Dime tu email para enviarte el historial.\n\nEjemplo: usuario@correo.com"
+  - text: "💌 ¿A qué correo te envío el PDF con tu historial?"
 
   utter_ask_day_of_week:
   - text: "📅 ¿En qué día de la semana ocurre/ocurrió el accidente?"
+  - text: "📆 ¿Qué día de la semana es/fue?"
+  - text: "🗓️ Dime el día de la semana del accidente."
+  - text: "📅 ¿Cuál es el día de la semana? (lunes, martes, etc.)"
+  - text: "🔢 ¿En qué día ocurre? Puedes decir el nombre."
 
   utter_ask_junction_control:
   - text: "🚦 ¿Qué tipo de control hay en el cruce?"
+  - text: "🚥 ¿Cómo está controlado el cruce? (semáforo, stop, etc.)"
+  - text: "🔴 ¿Hay algún control en el cruce? ¿Cuál?"
+  - text: "🚦 Dime qué tipo de señalización tiene el cruce."
+  - text: "⚠️ ¿Qué control de tráfico hay? (semáforo, rotonda, sin control, etc.)"
 
   utter_ask_junction_detail:
   - text: "🔀 ¿Qué tipo de cruce es?"
+  - text: "🛣️ ¿Cómo es el cruce? (cruce en T, rotonda, simple, etc.)"
+  - text: "🔀 Describe el tipo de intersección."
+  - text: "🚧 ¿Qué clase de cruce es? (en T, en Y, múltiple, etc.)"
+  - text: "📍 ¿Puedes detallar el tipo de cruce?"
 
   utter_ask_light_conditions:
   - text: "💡 ¿Cuáles son las condiciones de luz?"
+  - text: "🌞 ¿Cómo está la iluminación? (día, oscuro, amanecer, etc.)"
+  - text: "🔦 ¿Qué condiciones de luz hay?"
+  - text: "☀️ ¿Es de día, de noche, hay iluminación?"
+  - text: "💡 Dime las condiciones de visibilidad/luz."
 
   utter_ask_local_authority:
   - text: "📍 ¿En qué distrito ocurre?"
+  - text: "🗺️ ¿Cuál es el distrito? (0, 1, 3, 4, 76, 159, 176, 267, 384)"
+  - text: "📌 Dime el número del distrito."
+  - text: "🏙️ ¿En qué distrito o zona se da?"
+  - text: "📍 ¿Qué distrito? Ejemplos: 0, 1, 3, 4, 76, 159, 176, 267, 384"
 
   utter_ask_road_surface:
   - text: "🛣️ ¿Cuál es la condición de la superficie de la vía?"
+  - text: "🌧️ ¿Cómo está la superficie? (seco, húmedo, hielo, etc.)"
+  - text: "🛤️ ¿En qué estado se encuentra el pavimento?"
+  - text: "💧 ¿La vía está seca, mojada, con hielo?"
+  - text: "🚗 Describe la condición del asfalto/superficie."
 
   utter_ask_road_type:
-  - text: "🚗 ¿Qué tipo de vía es?:"
+  - text: "🚗 ¿Qué tipo de vía es?"
+  - text: "🛣️ ¿Es calle, avenida, autopista o carretera?"
+  - text: "🚙 Dime el tipo de vía (calle, avenida, carretera, etc.)"
+  - text: "🏁 ¿Qué clase de vía es?"
+  - text: "🛤️ ¿Puedes especificar el tipo de vía?"
 
   utter_ask_speed_limit:
   - text: "⚡ ¿Cuál es el límite de velocidad en km/h?"
+  - text: "🚦 ¿Qué velocidad máxima está permitida?"
+  - text: "📏 Dime el límite de velocidad (30, 40, 50, 60, etc.)"
+  - text: "⚡ ¿A qué velocidad se puede circular ahí?"
+  - text: "🔢 ¿Cuál es la velocidad límite en esa zona?"
 
   utter_ask_urban_rural:
   - text: "🏙️ ¿El área es urbana o rural?"
+  - text: "🌆 ¿Es zona urbana (ciudad) o rural (campo)?"
+  - text: "🏘️ ¿Estamos en área urbana o rural?"
+  - text: "🌃 Dime si es ciudad o campo."
+  - text: "🗺️ ¿Zona urbana o zona rural?"
 
   utter_ask_weather:
   - text: "🌤️ ¿Cuáles son las condiciones climáticas?"
+  - text: "☀️ ¿Cómo está el clima? (despejado, lluvia, niebla, etc.)"
+  - text: "🌧️ ¿Qué tiempo hace?"
+  - text: "⛅ Dime las condiciones del clima."
+  - text: "🌦️ ¿Está lloviendo, soleado, nublado?"
 
   utter_ask_vehicle_type:
   - text: "🚙 ¿Qué tipo de vehículo está involucrado?"
+  - text: "🚗 ¿Qué vehículo es? (coche, moto, camión, bus, etc.)"
+  - text: "🏍️ Dime el tipo de vehículo."
+  - text: "🚕 ¿Qué clase de vehículo participa?"
+  - text: "🚌 ¿Es coche, moto, camión, autobús, bicicleta?"
 
   utter_ask_casualties:
   - text: "🚑 ¿Cuántas víctimas potenciales hay?"
+  - text: "👥 ¿Cuántas personas están heridas o afectadas?"
+  - text: "🩹 Dime el número de víctimas potenciales."
+  - text: "🚨 ¿Cuántas víctimas hubo?"
+  - text: "💔 ¿Hay víctimas? ¿Cuántas?"
 
   utter_ask_num_vehicles:
   - text: "🚗🚗 ¿Cuántos vehículos están involucrados?"
+  - text: "🚙🚕 ¿Cuántos vehículos participan en el accidente?"
+  - text: "🔢 Dime el número de vehículos."
+  - text: "🚘 ¿Cuántos vehículos hay?"
+  - text: "🚗 ¿Número de vehículos involucrados?"
 
   utter_prediccion_iniciada:
   - text: "🔮 ¡Perfecto! Voy a hacerte algunas preguntas para analizar el accidente.\n\n📝 Son 13 preguntas rápidas. ¡Empecemos!"
+  - text: "✅ ¡Excelente! Iniciando análisis de predicción.\n\n📋 Necesito 13 datos del accidente. ¡Comencemos!"
+  - text: "🎯 ¡Genial! Vamos a predecir la severidad del accidente.\n\n🔢 Te haré 13 preguntas breves. ¡Adelante!"
+  - text: "🚀 ¡Perfecto! Empecemos con la predicción.\n\n💬 Son solo 13 preguntas rápidas. ¡Vamos!"
+  - text: "📊 ¡Listo! Iniciando proceso de predicción.\n\n✏️ Responde 13 preguntas y te daré el resultado. ¡Empecemos!"
 
 actions:
   - action_login
